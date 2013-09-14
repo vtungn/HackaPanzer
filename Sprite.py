@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+
 import pygame
 from pygame.locals import *
 
@@ -7,7 +8,7 @@ class Sprite(pygame.sprite.Sprite):
 
     def __init__(self,SpriteName):
         pygame.sprite.Sprite.__init__(self)
-        self.Name = SpriteName
+        self.Name = SpriteName # What is this for?
         self.rect = 0
         self.image = 0
 

@@ -35,6 +35,8 @@ class TankSprite(Sprite):
         self.image = self.images[1]
         self.rect = self.rects[1]
 
+    # REVIEW
+    # This is ROTATE sprite, NOT move
     def MoveSprite(self,frame):
         self.image = self.images[frame]
         #self.rect = self.rects[frame]

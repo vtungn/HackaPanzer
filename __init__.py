@@ -13,7 +13,7 @@ if not pygame.mixer: print 'Warning, sound disabled'
 
 class PanzerMain:
     "The main game"
-
+    
     def __init__(self, width=1080, depth=720):
     
         # List of all the game's objects
@@ -33,17 +33,16 @@ class PanzerMain:
     def LoadContent(self):
 	"Load all resources, sprite, shit..."
 	
-	    # TODO: Create game objects here
-        self.tank = Tank()
-        self.tank2 = TankAI()
-        
-        # TODO: Add game objects to the game here
-        self.gameObjects.append(self.tank)
-        self.gameObjects.append(self.tank2)
-        
+	    # Create initial game objects here
+        self.tank = Tank(self, (0,0))
+        self.tank2 = TankAI(self, (0,0))
+               
         # Load resources
         for gameObject in self.gameObjects:
 		    gameObject.LoadContent()
+		    
+    def add_object(self, game_object):
+        self.gameObjects.append(game_object)
 
     def MainLoop(self):
         while 1:
@@ -56,13 +55,16 @@ class PanzerMain:
                     sys.exit()
                     
                 # Handle input
+                #
+                # REVIEW
+                # Request to merge UpdateKeyPress() & Update(), since you will update right after receiving input (or any kind of event) anyway
                 elif event.type == KEYDOWN:                
                     for gameObject in self.gameObjects:
 			            gameObject.UpdateKeyPress(event)
-               
-            # Update game logic
-            for gameObject in self.gameObjects:
-			    gameObject.Update()
+                
+                # Update game logic
+                for gameObject in self.gameObjects:
+			        gameObject.Update(event)
             
             # Draw graphics to back buffer
             self.MainDraw()
