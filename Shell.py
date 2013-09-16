@@ -17,16 +17,16 @@ class Shell(GameObject):
     def Update(self, event):
         if (self.is_going):
             if (self.direction == 'right'):
-                #self.sprite.move(1,0)
+                self.sprite.get_rect().move_ip(1,0)
                 pass
             elif (self.direction == 'left'):
-                #self.sprite.move(-1,0)
+                self.sprite.get_rect().move_ip(-1,0)
                 pass
             elif (self.direction == 'up'):
-                #self.sprite.move(0,1)
+                self.sprite.get_rect().move_ip(0,1)
                 pass
             elif (self.direction == 'down'):
-                #self.sprite.move(0,-1)
+                self.sprite.get_rect().move_ip(0,-1)
                 pass
         
     def Draw(self, screen):
