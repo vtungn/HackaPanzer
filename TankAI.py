@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-
 from Tank import *
 
 class TankAI(Tank):
 
-    def __init__(self, game, position):
-        GameObject.__init__(self, game, position)  
+    def __init__(self):
+        pass
 
     def UpdateKeyPress(self,event):
         pass
 
-    def Update(self, event):
+    def Update(self):
         self.moveTank(K_RIGHT)

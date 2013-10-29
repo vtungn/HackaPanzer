@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-class Shell:
+from Shell import *
+
+class NormalShell(Shell):
 
     def __init__(self):
         pass

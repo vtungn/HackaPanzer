@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-
 import os, sys
-
 import pygame
 from pygame.locals import *
-
 from Tank import *
 from TankAI import *
 
@@ -12,74 +9,69 @@ if not pygame.font: print 'Warning, fonts disabled'
 if not pygame.mixer: print 'Warning, sound disabled'
 
 class PanzerMain:
-    "The main game"
-    
+    "This class initialization the main game"
+
+    #rect1 = pygame.Rect(0, 0, 10, 10)
+
+    gameObjects = []
+
     def __init__(self, width=1080, depth=720):
-    
-        # List of all the game's objects
-        self.gameObjects = []
-        
-        # Init engine
+
+        #init the screen window
         pygame.init()
-                
-        # Create the screen window
         self.width = width
         self.depth = depth
         self.screen = pygame.display.set_mode((self.width,self.depth))
 
-        # Load game resources
-        self.LoadContent()            
+	self.LoadContent()
+        #xM = 0
+        #yM = 0
 
     def LoadContent(self):
-	"Load all resources, sprite, shit..."
-	
-	    # Create initial game objects here
-        self.tank = Tank(self, (0,0))
-        self.tank2 = TankAI(self, (0,0))
-               
-        # Load resources
-        for gameObject in self.gameObjects:
-		    gameObject.LoadContent()
-		    
-    def add_object(self, game_object):
-        self.gameObjects.append(game_object)
+	"load all module, sprite, shit..."
+	#self.track = Track(self.rect1)
+
+	# TODO: Add game objects here
+        self.tank = Tank()
+        self.tank2 = TankAI()
+        self.gameObjects.append(self.tank)
+        self.gameObjects.append(self.tank2)
+	for gameObject in self.gameObjects:
+		gameObject.LoadContent()
 
     def MainLoop(self):
+        #set_repeat(x,y)//x is delaytime, y is times each repeat
+        pygame.key.set_repeat(10,30)
+
         while 1:
-        
-            # Handle pygame's events
             for event in pygame.event.get():
-            
-                # Quit game
                 if event.type == pygame.QUIT:
                     sys.exit()
-                    
-                # Handle input
-                #
-                # REVIEW
-                # Request to merge UpdateKeyPress() & Update(), since you will update right after receiving input (or any kind of event) anyway
-                elif event.type == KEYDOWN:                
-                    for gameObject in self.gameObjects:
-			            gameObject.UpdateKeyPress(event)
-                
-                # Update game logic
-                for gameObject in self.gameObjects:
-			        gameObject.Update(event)
-            
-            # Draw graphics to back buffer
+                elif event.type == KEYDOWN:
+		    for gameObject in self.gameObjects:
+			    gameObject.UpdateKeyPress(event)
+
+                #elif event.type == KEYDOWN:
+                    #if ((event.key == K_RIGHT)
+                    #or (event.key == K_LEFT)
+                    #or (event.key == K_UP)
+                    #or (event.key == K_DOWN)):
+                        #xM, yM = self.track.move(event.key)
+            for gameObject in self.gameObjects:
+			    gameObject.Update()
             self.MainDraw()
-            
-            # Swap screen buffer
             pygame.display.flip()
 
     def MainDraw(self):
-    
-        # Draw background
+
         self.screen.fill((255, 255, 255))
-        
-        # Draw graphics
+        pygame.draw.line(self.screen, (0, 0, 255), (210, 0), (200, 100))
+        pygame.draw.aaline(self.screen, (0, 0, 255), (200, 0), (200, 100))
+
         for gameObject in self.gameObjects:
             gameObject.Draw(self.screen)
+
+        #pygame.draw.rect(self.screen, (255, 0, 0), self.rect1)
 
 if __name__ == "__main__":
     MainWindow = PanzerMain()
